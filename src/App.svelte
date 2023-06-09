@@ -1,6 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
+	import 'ag-grid-community/styles/ag-grid.css';
+  
+  import 'bootstrap/dist/css/bootstrap.min.css';
+  
   
 	let gridContainer;
 	let agGrid;
@@ -8,13 +12,16 @@
 	let gridOptions;
   
 	const columnDefs = [
-	  { headerName: 'ID', field: 'id' },
+	  { headerName: 'ID', field: 'id' , headerCheckboxSelection: true,
+		checkboxSelection: true,},
 	  { headerName: 'First Name', field: 'firstName', editable: true, filter: 'agTextColumnFilter' },
 	  { headerName: 'Surname', field: 'surname', editable: true, filter: 'agTextColumnFilter' },
 	  { headerName: 'Email', field: 'email', editable: true, filter: 'agTextColumnFilter' },
 	  { headerName: 'Mobile', field: 'mobile', editable: true, filter: 'agTextColumnFilter' },
 	  
 	];
+  
+	
   
 	let rowData = [];
 	let searchQuery = '';
@@ -107,11 +114,15 @@
 		   
 			editable: true
 		  },
+  
+		  
 		  enableBrowserTooltips: true,
 		  pagination: true,
 		  paginationPageSize: 10,
 		  suppressRowClickSelection: true,
 		  rowSelection: 'multiple',
+  
+		  
 		
 		  onGridReady: function (params) {
 			gridApi = params.api;
@@ -121,9 +132,9 @@
 			const { data } = params;
 			const isNewCandidate = !data.id;
   
-			// Make a PUT request to update the data on the API
+		   
 			fetch(`https://api.recruitly.io/api/candidate?apiKey=TEST1236C4CF23E6921C41429A6E1D546AC9535E`, {
-			  method: isNewCandidate ? 'POST' : 'PUT',
+			  method :'POST',
 			  headers: {
 				'Content-Type': 'application/json'
 			  },
@@ -168,22 +179,7 @@
 	});
   </script>
   
-  <svelte:head>
-	<script src="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/dist/ag-grid-community.min.noStyle.js"></script>
-	<link
-	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/dist/styles/ag-grid.css"
-	/>
-	<link
-	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/ag-grid-community@latest/dist/styles/ag-theme-alpine.css"
-	/>
   
-	<link
-	  rel="stylesheet"
-	  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-	/>
-  </svelte:head>
   
   <div class="container d-flex justify-content-center align-items-center vh-100">
 	<div class="d-flex flex-column">
